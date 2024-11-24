@@ -19,9 +19,9 @@ const App = () => {
       );
       if (!response.ok) throw new Error("Failed to fetch photos");
 
-      // Introduce a slight delay to ensure the spinner is visible
+      
       const data = await response.json();
-      await new Promise((resolve) => setTimeout(resolve, 500)); // Delay of 500ms
+      await new Promise((resolve) => setTimeout(resolve, 500)); 
 
       setPhotos((prevPhotos) => [...prevPhotos, ...data]);
     } catch (err) {
