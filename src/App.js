@@ -14,13 +14,15 @@ const App = () => {
     setError(null);
 
     try {
-      console.log("Unsplash Access Key:", ACCESS_KEY);
-
       const response = await fetch(
         `https://api.unsplash.com/photos?page=${page}&per_page=12&client_id=${ACCESS_KEY}`
       );
       if (!response.ok) throw new Error("Failed to fetch photos");
+
+      // Introduce a slight delay to ensure the spinner is visible
       const data = await response.json();
+      await new Promise((resolve) => setTimeout(resolve, 500)); // Delay of 500ms
+
       setPhotos((prevPhotos) => [...prevPhotos, ...data]);
     } catch (err) {
       setError(err.message);
@@ -49,7 +51,10 @@ const App = () => {
 
   return (
     <div className="app">
-      <h1>Infinite Scroll Photo Gallery</h1>
+      <header className="app-header">
+        <h1>PhotoScape</h1>
+        <p>Discover stunning images with infinite scrolling!</p>
+      </header>
       <div className="gallery">
         {photos.map((photo) => (
           <div key={photo.id} className="photo">
@@ -62,8 +67,16 @@ const App = () => {
           </div>
         ))}
       </div>
-      {loading && <p className="loading">Loading...</p>}
+      {loading && (
+        <div className="loading">
+          <div className="spinner"></div>
+          <p>Loading...</p>
+        </div>
+      )}
       {error && <p className="error">Error: {error}</p>}
+      <footer className="app-footer">
+        -----harry
+      </footer>
     </div>
   );
 };
